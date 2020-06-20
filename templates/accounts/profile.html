@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+
+{% include 'partials/_message.html' %}
+<div class="container py-2 mt-2">
+    <div class="row">
+        <div class="col-md-6 card mx-auto">
+            <div class="row mt-2 py-2">
+            <div class="col-md-4 col-sm-12"> 
+                <img src="{{user.profile.avatar.url}}" alt="" class="user-avatar">  
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{u_form}}
+                
+                    {{p_form}}
+                    <small class="text-center">  </small>
+                <input type="submit" value="Update">
+                </form>
+                <hr>
+            <a href="{% url 'change-password' %}" id="pw-change" class="p-0 m-0"> Change Password </a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    button {
+        display: inline-block;
+        font-weight: 400;
+        color: snow;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        background-color: #6912A7;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+    }
+    .user-avatar {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+    }
+
+    #id_username, #id_email{
+        width: 100%;
+        border: none;
+        border-bottom: 3px #6912A7 solid;
+        height: 20px;
+        margin: -20px 0;
+        outline: none;
+        margin: 10px 0;
+        font-weight: 600;
+        font-size: 1em;
+    }
+    
+    label {
+        color: #666666;
+        font-family: 'Nunito';
+        font-weight: 600;
+        margin:-10px 0;
+    }
+    #id_username:focus, #id_email:focus{
+        border-bottom: 3px #3ac57f solid;
+        transition: .5s;
+    }
+    input[type="file"] {
+        display: none;
+    }
+    label[for="id_avatar"] {
+        border: 2px solid #6912A7;
+        display:block;
+        margin: 5px 0;
+        height:30px;
+        padding: 3px 0;
+        width: 60px;
+        cursor: pointer;
+    }
+    label[for="id_avatar"]:hover {
+        border: 2px solid #3ac57f;
+        background: #3ac57f;
+        color: white;
+        transition: .3s;
+    }
+    small{
+        display: none;
+    }
+    .show {
+        display: block;
+        color: #6912A7;
+        font-weight: 600;
+    }
+    
+    input[type="submit"] {
+        border: 2px solid #3ac57f;
+        display:block;
+        margin: 5px 0;
+        height:30px;
+        padding: 3px 0;
+        width: 100%;
+        font-weight: 600;
+        cursor: pointer;
+        background: #3ac57f;
+        color: white;
+        text-align: center;
+    }
+    input[type="submit"]:hover {
+        border: 2px solid #32a76c;
+        background: #32a76c;
+        color: white;
+        transition: .3s;
+    }
+    #pw-change {
+        text-decoration: none;
+        color: #6912A7;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    #pw-change:hover {
+        color: #32a76c;
+        transition: .2s;
+    }
+</style>
+
+<script>
+    document.querySelector('#id_avatar').onchange = function () {
+        var text = document.querySelector('small');
+        text.innerHTML = 'selected image: ' + this.value;
+        text.classList.add('show');
+        };
+</script>
+
+{% endblock content %}

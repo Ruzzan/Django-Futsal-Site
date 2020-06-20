@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+ 
+{% endblock title %}
+
+{% block content %}
+
+<div class="container card w-25 p-4 mt-4 mb-3">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <p> Confirm delete team? </p>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Delete" class="w-100 text-center my-2 btn btn-danger text-white">
+    </form>
+</div>
+
+
+
+{% endblock content %}

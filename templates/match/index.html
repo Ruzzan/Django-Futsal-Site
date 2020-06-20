@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Futboot Team {% endblock title %}
+
+{% block content %}
+<!--About heading-->
+<div class="container pb-0" id="sec1">
+    <div class="row">
+        <div class="col-lg-5 mt-2">
+            <img src="{% static 'images/messi.png' %}" alt="img1" class="img-fluid w-100" height="400">
+        </div>
+        <div class="col-lg-6 ml-2">
+            <h3 class="text-center text-bold"> Futboot Match </h3>
+            <div class="mx-auto" id="menu">
+                <div class="menu-item">
+                    <p><a href="{% url 'match-create' %}"> Create Match </a></p>
+                </div>
+
+                <div class="menu-item">
+                    <p> Find Match </p>
+                </div>
+
+                <div class="menu-item">
+                    <p> Play Match </p>
+                </div>
+            </div>
+            <!-- user team -->
+
+<div class="card p-1 mt-2">
+    <div class="card-title ">
+        <h4 class="text-center mt-2"> Search Matches </h4>
+    </div>
+    <div class="card-body pb-1 p-0">
+        <div class="row m-0 d-flex justify-content-center">
+        <div class="container">
+            <div class="row">
+                <form class="mx-auto" method="GET" action="{% url 'match-search' %}">
+                    <div class="form-row align-items-center">
+                <div class="col-sm-6 my-1 mx-0">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-futbol"></i></div>
+                            </div>
+<input type="text" class="form-control" name="search_query" placeholder="futsal,team,date">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 my-1 mx-0">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                </div>
+                <select name="game_type" id="" class="form-control">
+                <option value="" selected="True" disabled="disabled"> Game Type </option>
+                    <option value="f">Friendly</option>
+                    <option value="l">Loser's Pay</option>
+                </select>
+                            </div>
+                        </div>
+                
+                <div class="col-md-4 mx-auto mt-2">
+                        <div class="container-fluid">
+        <button class="search-btn ">Search <i class="fas fa-search"></i> </button>
+                        </div>
+                </div>
+                    </div>
+                    
+
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+<hr>
+</div>
+
+<div class="container" id="sec1">
+<h3> Find Matches </h3>
+{% if not has_team %}
+<small class="text-center"> Join team to play </small>
+{% endif %}
+<div class="row">
+    <div class="col-md-6">
+        {% for match in match_requests %}
+        {% include 'partials/match/match_request.html' %}
+        {% endfor %}
+    </div>
+    <div class="col-md-5 ml-auto">
+        <img src="{% static 'images/player.png' %}" alt="" class=" img-fluid w-100 h-100">
+    </div>
+</div>
+</div>
+</div>
+
+    <!--footer-->
+    <!-- <footer class="container-fluid text-center bg-dark text-light mt-4 py-3">
+    <h3 class="lead d-inline">FIFA WORLD CUP </h3> &copy;
+</footer> -->
+
+
+    <style>
+        body {
+            background: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        #sec1 {
+            background: #ffffff !important;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        input {
+            border: 1px ridge rgb(219, 218, 218);
+            height: 29px;
+            margin: 0;
+        }
+        
+        .input-group-text {
+            background: #3ac57f !important;
+            color: white;
+        }
+        input[type="search"] {
+            border-right: none;
+            border-bottom: none;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            color: #F5F5F5;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            background: #3ac57f;
+        }
+
+        input[type="submit"]:hover {
+            background: #33a56c;
+        }
+
+        h3 {
+            font-weight: 600;
+            color: #7C33AA;
+        }
+
+        h4,
+        p {
+            color: #7C33AA;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .menu-item {
+            height: 40px;
+            color: #33a56c;
+            padding: 5px;
+            text-decoration: none;
+            margin: 10px;
+            border: 3px solid #3ac57f;
+        }
+
+        .menu-item p a {
+            text-decoration: none;
+            color: #33a56c;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .menu-item p {
+            color: #33a56c;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .menu-item:hover,
+        .menu-item p a:hover,
+        .menu-item p:hover {
+            background: #33a56c;
+            color: #F5F5F5;
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #visit {
+            background: #3ac57f;
+            width: 70px;
+            border: 2px #3ac57f;
+            color: white;
+        }
+
+        #visit:hover {
+            background: #33a56c;
+            transition: .2s;
+        }
+        small { color: #7C33AA; font-weight: 600; }
+        
+.search-btn {
+    background-color: #3ac57f;
+    color: white;
+    border: none;
+    height: 2em;
+    font-weight: 600;
+    width: 6em;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.search-btn:hover {
+    background-color: #33a56c;
+}
+
+        @media screen and (max-width: 698px) {
+        .img-fluid {display: none;}   
+        #menu {display: none;}
+        }
+    </style>
+    {% endblock content %}

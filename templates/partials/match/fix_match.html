@@ -1,0 +1,57 @@
+<div class="card my-2 p-1" id="item">
+        <div class="team">
+        <div class="img">
+                <img class="" src="{{match.match.team.logo.url}}" alt="Card image cap" height="60" width="60" style="border-radius:50%" class="">
+            </div>
+            &nbsp;&nbsp;
+            <div class="name">
+            <span class="text-center" id="teamname"> 
+                <a href="{{match.match.team.get_absolute_url}} "> {{match.match.team.name}}  </a>
+            </span>
+        </div>
+        </div>
+            <div class="details"> 
+            <h4> VS </h4>
+<small class="text-center"> {{match.match.date}} {{match.match.start_time}} </small>
+<small class="text-center"> {{match.match.get_game_type_display}} </small>
+<small class="text-center"> 
+<a href="{{match.match.futsal.get_absolute_url}}"> 
+    {{match.match.futsal.name}}
+</a> </small>
+            </div>
+            <div class="team">
+            <span class="text-center" id="teamname"> 
+                    <a href="{{match.opponent.get_absolute_url}} "> {{match.opponent.name}}  </a>
+                </span>
+                &nbsp;&nbsp;
+            <div class="img">
+                <img class="" src="{{match.opponent.logo.url}}" alt="Card image cap" height="60" width="60" style="border-radius:50%">
+            </div>
+            </div>
+</div>
+
+<style>
+    .team {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    #teamname a {
+        background: none;
+        border: none;
+        color: #7C33AA;
+        font-size: 1.1rem;
+    }
+</style>

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="font-weight:800;"> Dashboard  </h2>
+</div>
+
+<div class="container ">
+    <div class="alert alert-secondary text-dark py-2" role="alert">
+        <a href="{% url 'dashboard' %}">Dashboard</a> / <a href="{% url 'home' %}">Home</a> / <a href="{% url 'booking' %}">Book Futsal</a>
+    </div>
+</div>
+
+
+<div class="container">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                aria-controls="nav-home" aria-selected="true">Today' Booking</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                aria-controls="nav-profile" aria-selected="false">Valid Booking</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                aria-controls="nav-contact" aria-selected="false">Saved Futsals</a>
+        </div>
+    </nav>
+</div>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Futsal</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody class="zz">
+                    {% for booking in today_booking %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>
+                            <img src="{{booking.futsal.main_img.url}}" alt="" height="30" width="30"
+                                style="border-radius:50%;">
+                        <a href="{{booking.futsal.get_absolute_url}}"> {{booking.futsal}} </a>
+                        </td>
+                        <td>{{booking.date}}</td>
+                        <td>{{booking.time}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</div>
+
+
+<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Futsal Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody class="zz">
+                {% for booking in queryset %}
+                {% if booking.is_valid %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>
+                        <img src="{{booking.futsal.main_img.url}}" alt="" height="30" width="30"
+                            style="border-radius:50%;"> 
+                            <a href="{{booking.futsal.get_absolute_url}}"> {{booking.futsal}} </a>
+                    </td>
+                    <td>{{booking.date}}</td>
+                    <td>{{booking.time}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Futsal Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody class="zz">
+                {% for futsal in saved %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>
+                        <img src="{{futsal.main_img.url}}" alt="" height="40" width="40"
+                            style="border-radius:50%;">
+                             <a href="{{futsal.get_absolute_url}}">
+                                {{futsal.name}}
+                            </a>
+                    </td>
+                    <td>{{futsal.location}}</td>
+                    <td>{{futsal.price}} /hr</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+<style>
+    td {
+        font-family: 'Nunito';
+        font-weight: 600;
+    }
+    a {
+       
+        text-decoration: none;
+        cursor: pointer;
+    }
+    a:hover {
+        text-decoration: none;
+        color: #3ac57f;
+    }
+</style>
+{% endblock content %}

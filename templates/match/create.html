@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Create Booking {% endblock title %}
+
+{% block content %}
+
+{% include 'partials/_message.html' %}
+
+<div class="container">
+    <div class="row mt-2 py-3">
+        <div class="col-md-7 mx-auto">
+            <div class="card p-2">
+<h3 class="text-center" style="font-family:'Nunito';color:#6912A7"> Create a Match!  </h3>
+                <form action="" method="POST" class="form-group">
+                {% csrf_token %}
+                {{form | crispy}}
+                <button type="submit"> Create </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+        button {
+            display: inline-block;
+            font-weight: 400;
+            color: snow;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            background-color: #3ac57f;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+        }
+        button:hover {
+            background: #2ea569;
+        }
+
+        label {
+            color: #666666;
+            font-family: 'Nunito';
+            font-weight: 500;
+            margin:5px 0;
+        }
+              
+        .helptext {
+            display: block;
+            color: #6912A7;
+            font-weight: 500;
+            font-family: 'Nunito';
+        }
+</style>
+
+
+{% endblock content %}

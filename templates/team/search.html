@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %} {{search_term}} {% endblock title %}
+
+{% block content %}
+
+<div class="container mt-2">
+    <h4 class="text-left" style="color: #2f9c66;">Results for {{search_term}} </h4>
+    <!-- search form -->
+    <form action="" method="get">
+            <input type="search" name="q" id="" placeholder="search teams..">
+            <button type="submit" id="search-btn"> <i class="fas fa-search"></i> </button>
+        </form>
+        </div>
+<hr>
+
+<div class="container">
+<div class="row">
+        <div class="col-md-5">
+            {% for team in teams %}
+            <div class="card my-2" id="item">
+                    <div class="img">
+                        <img class="" src="{{team.logo.url}}" alt="Card image cap" height="60" width="60" style="border-radius:50%">
+                    </div>
+                    <div class="name">
+                    <span class="text-center" id="teamname"> 
+                        <a href="{{team.get_absolute_url}} "> {{team.name}}  </a>
+                    </span>
+                    </div>
+                        <div class="col-md-4"> <span> {{team.members.all.count}} members </span> </div>
+                    
+                        <div>
+                            <a href="{% url 'join-team' slug=team.slug %}">
+                                <button id="visit"> Join </button>
+                            </a>
+                        </div>
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+        #item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+        }
+        #teamname a {
+            background: none;
+            border: none;
+            color: #7C33AA;
+            font-size: 1.1rem;
+        }
+        #visit {
+            background: #3ac57f;
+            width: 70px;
+            border: 2px #3ac57f;
+            color: white;
+        }
+    
+        #visit:hover {
+            background: #33a56c;
+            transition: .2s;
+        }
+        form {
+            display: flex;
+            align-items: flex-start;
+            justify-content: start;
+        }
+    
+        input {
+            border: 1px ridge rgb(219, 218, 218);
+            height: 29px;
+            margin: 0;
+        }
+        #search-btn {
+            border: none;
+            height: 29px;
+            background: #33a56c;
+            color: white;
+        }
+    
+        input[type="submit"] {
+            cursor: pointer;
+            color: #F5F5F5;
+            font-size: 13px;
+            width: 50px;
+            border: none !important;
+            background: #3ac57f;
+        }
+    
+        input[type="submit"]:hover {
+            background: #33a56c;
+        }
+    </style>
+
+{% endblock content %}

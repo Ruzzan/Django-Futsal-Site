@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %} Create Team {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card mt-3">
+                <div class="card-header py-1">
+<h3 class="text-center" style="font-family:'Nunito';color:#6912A7"> {{title}}  </h3>
+                </div>
+                <div class="card-body">
+                    <form action="" enctype="multipart/form-data" method="POST">
+                        {% csrf_token %}
+                    {{form}}
+                    <small class="text-center">  </small>
+                <button type="submit" class="mt-2"> {{title}} </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+        button {
+            display: inline-block;
+            font-weight: 400;
+            color: snow;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            background-color: #3ac57f;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+        }
+        button:hover {
+            background: #2ea569;
+        }
+
+        label {
+            color: #666666;
+            font-family: 'Nunito';
+            font-weight: 500;
+            margin:3px 0;
+        }
+        #id_name{
+            width: 99%;
+            border: none;
+            border-bottom: 3px #6912A7 solid;
+            height: 20px;
+            margin: -20px 0 0 5px;
+            outline: none;
+           
+        }
+        #id_bio{
+            width: 100%;
+            border: none;
+            border: 2px #666666 solid;
+            height: 100px;
+            outline: none;
+           
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label[for="id_logo"] {
+            border: 2px solid #6912A7;
+            display:block;
+            margin: 10px 0 0 0;
+            height:30px;
+            padding: 3px 0;
+            width: 60px;
+            cursor: pointer;
+        }
+        label[for="id_logo"]:hover {
+            border: 2px solid #3ac57f;
+            background: #3ac57f;
+            color: white;
+            transition: .3s;
+        }
+        #id_name:focus{
+            border-bottom: 3px #3ac57f solid;
+            transition: .3s;
+        }
+        #id_bio:focus{
+            border: 3px #3ac57f solid;
+            transition: .3s;
+        }
+        small{
+            display: none;
+        }
+        .show {
+            display: block;
+            color: #6912A7;
+            font-weight: 600;
+        }
+</style>
+
+<script>
+        document.querySelector('#id_logo').onchange = function () {
+            var text = document.querySelector('small');
+            text.innerHTML = 'selected image: ' + this.value;
+            text.classList.add('show');
+            };
+    </script>
+
+{% endblock content %}
+

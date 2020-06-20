@@ -1,0 +1,32 @@
+<div class="card my-2" id="item">
+        <div class="img">
+            <img class="" src="{{team.logo.url}}" alt="Card image cap" height="60" width="60" style="border-radius:50%">
+        </div>
+        <div class="name">
+        <span class="text-center" id="teamname"> 
+            <a href="{{team.get_absolute_url}} "> {{team.name}}  </a>
+        </span>
+        </div>
+            <div class="col-md-4"> <span> {{team.members.all.count}} members </span> </div>
+        
+            <div>
+                <a href="{% url 'join-team' slug=team.slug %}">
+                    <button id="visit"> Join </button>
+                </a>
+            </div>
+</div>
+
+<style>
+    #item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+    #teamname a {
+        background: none;
+        border: none;
+        color: #7C33AA;
+        font-size: 1.1rem;
+    }
+</style>

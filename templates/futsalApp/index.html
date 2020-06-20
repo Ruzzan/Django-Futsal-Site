@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6938574b26.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>
+        {% block title %} {% endblock title %}
+    </title>
+</head>
+
+<body>
+
+    <!-- include _nav.html  -->
+    {% include 'partials/_nav.html' %}
+    <!-- section 1 -->
+    <section>
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <a class="navbar-brand text-white" href="{% url 'home' %}">Futboot</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mx-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'futsal-list' %}">Futsals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'booking' %}">Bookings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'team-index' %}">Team</a>
+                                </li>
+                            </ul>
+
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if request.user.is_authenticated %}
+                                        <img src="{{request.user.profile.avatar.url}}" alt="" height="30" width="30"
+                                            style="border-radius:50%;">
+                                        {{request.user.username}}
+                                        {% else %}
+                                        {% endif %}
+                                    </a>
+                                    <div class="dropdown-menu p-0" aria-labelledby="navbarDropdownMenuLink">
+                                        {% if request.user.is_authenticated %}
+                                        <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
+                                        {% if request.user.profile.is_owner %}
+                                    
+                                        <a class="dropdown-item" href="{% url 'owner-dashboard' %}">
+                                            Dashboard
+                                        </a>
+                                    
+                                        {% endif %}
+                                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                        {% else %}
+                                        <a class="dropdown-item" href="#">Signup</a>
+                                        <a class="dropdown-item" href="#">Login</a>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+
+                <div class="col-md-6 mx-auto  pt-5">
+                    <div class="search-box">
+                        <p class="text-center search-info">
+                            Search your favourite futsal and book it!
+                        </p>
+                        <div class="card">
+                            <form class="mt-3 px-2" method="GET" action="{% url 'futsal-search' %}">
+                                <div class="form-row align-items-center">
+                                    <div class="col-sm-6 my-1 mx-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fas fa-futbol"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" name="futsal_name"
+                                                placeholder="name of futsal">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 my-1 mx-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i>
+                                                </div>
+                                            </div>
+                                            <select name="futsal_location" id="" class="form-control">
+                                                <option value="" selected="True" disabled="disabled"> Location </option>
+                                                <option value="butwal">Butwal</option>
+                                                <option value="bhaktapur">Bhaktapur</option>
+                                                <option value="chitwan">Chitwan</option>
+                                                <option value="dadeldhura">Dadeldhura</option>
+                                                <option value="dhading">Dhading</option>
+                                                <option value="jhapa">Jhapa</option>
+                                                <option value="kaski">Kaski</option>
+                                                <option value="kathmandu">Kathmandu</option>
+                                                <option value="kavreplanchauk">Kavreplanchauk</option>
+                                                <option value="lalitpur">Lalitpur</option>
+                                                <option value="morang">Morang</option>
+                                                <option value="myagdi">Myagdi</option>
+                                                <option value="nuwakot">Nuwakot</option>
+                                                <option value="palpa">Palpa</option>
+                                                <option value="syangja">Syangja</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <button class="search-btn mx-auto">Search <i class="fas fa-search"></i> </button>
+                                </div>
+                        </div>
+                        </form>
+
+                        <div class="random">
+                            <a href="{% url 'match-index' %}" class="text-center match-info">
+                                Find a futsal match here.
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- end section 1 -->
+
+
+    <!-- section 2-->
+    <div class="container pt-2 mx-0">
+        <div class="menu">
+            <div class="menu-item">
+                <i class="fas fa-futbol"></i>
+                <a href="{% url 'futsal-list' %}">
+                    <p>Futsals</p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-handshake"></i>
+                <a href="{% url 'match-index' %}">
+                    <p>Match</p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-star"></i>
+                {% if team %}
+                <a href="/team/{{team}}">
+                    <p>Team</p>
+                </a>
+                {% else %}
+                <a href="{% url 'team-index' %}">
+                    <p>Team</p>
+                </a>
+                {% endif %}
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-copy"></i>
+                <a href="{% url 'dashboard' %}">
+                    <p>Dashboard</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- end section 2 -->
+
+    <!-- the futsals -->
+    <div class="container mt-2">
+        <h4 id="list-heading"> Latest Futsals </h4>
+        <div class="row mt-2">
+            <!-- include futsal.html -->
+            {% for futsal in futsals %}
+            {% include 'partials/_futsal.html' %}
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</html>

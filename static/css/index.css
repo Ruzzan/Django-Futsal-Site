@@ -1,0 +1,191 @@
+*,html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+body {
+    font-family: 'Nunito' sans-serif;
+}
+.mobile-nav {
+    background-color: #7C33AA !important;
+    display: none;
+}
+section{
+    position: relative;
+    background: coral;
+    height:20rem;
+    width: 100%;
+    background-image: url('/static/images/bg.jpg');
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: initial;
+    color: white;
+}
+.overlay {
+    position: absolute;
+    height: 100%;
+    width:100%;
+    background-color: rgb(105, 18, 167);
+    opacity: 0.8;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    outline: none;
+    border: none;
+}
+.navbar-toggler i {
+    color: white;
+}
+
+.navbar-light {
+    background: transparent !important;
+}
+
+.navbar-nav .nav-item .nav-link{
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.navbar-nav .nav-item .nav-link:hover{
+    color:#47ffa3 !important;
+}
+
+.search-box p {
+    font-size: 1.2em;
+    font-weight: 600;
+    font-family: 'Nunito' sans-serif;
+}
+
+.search-btn {
+    background-color: #3ac57f;
+    color: white;
+    border: none;
+    height: 2em;
+    font-weight: 600;
+    width: 6em;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.search-btn:hover {
+    background-color: #33a56c;
+}
+
+.input-group-text {
+    background: #3ac57f !important;
+    color: white;
+}
+
+.random {
+    display: flex;
+    justify-content: end;
+}
+
+.random a {
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #47ffa3 !important;
+}
+.random a:hover{
+    transition: .2s;
+    transform-origin: center;
+    color: aqua !important;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    width: 25rem;
+    align-items: center;
+    justify-content: space-around;
+    height:4rem;
+}
+
+.menu-item {
+    height: 100%;
+    background: #3ac57f;
+    color: white;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.menu-item:hover {
+    background-color: white;
+    transition: .3s;
+    cursor: pointer;
+    border: 2px solid #3ac57f;
+    color: #7C33AA;
+}
+
+.menu-item:hover a{
+    text-decoration: none;
+    transition: .3s;
+    cursor: pointer;
+    color: #7C33AA;
+}
+
+.menu-item p {
+    font-size: 15px;
+    font-weight: 600;
+}
+.menu-item a {
+    text-decoration: none;
+    color: white;
+}
+.menu-item i {
+    margin-top: 10px;
+    font-size: 1.3em;
+    font-weight: 500;
+}
+.futsal-card {
+    color: #7C33AA;
+}
+.futsal-card .futsal-main-photo img {
+    border-radius: 10px;
+}
+.futsal-card .futsal-name h5 {
+    font-weight: bold;
+    font-family: 'Nunito' sans-serif;
+}
+
+.futsal-card #detail-btn {
+    background-color: #33a56c !important;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  
+}
+
+#list-heading {
+    color: #7C33AA;
+    font-family: 'Nunito' sans-serif;
+    font-weight: bolder;
+}
+
+@media (max-width:679px) {
+    .mobile-nav {
+        display: block;
+    }
+    section {
+        display: none;;
+    }
+    .search-box {
+        display: none;
+    }
+    .menu {
+        width: 100%;
+    }
+    .menu-item {
+        margin: 5px;
+    }
+}

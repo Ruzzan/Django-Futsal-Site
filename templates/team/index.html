@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Futboot Team {% endblock title %}
+
+{% block content %}
+<!--About heading-->
+<div class="container pb-0" id="sec1">
+    <div class="row">
+        <div class="col-lg-5 mt-2">
+            <!-- search form -->
+            <form action="{% url 'team-search' %}" method="get">
+                <input type="search" name="q" id="" placeholder="search teams..">
+                <input type="submit" value="search">
+            </form>
+            <img src="{% static 'images/goal.png' %}" alt="img1" class="img-fluid w-100" height="400">
+        </div>
+        <div class="col-lg-6 ml-2">
+            <h3 class="text-center text-bold"> Futboot Team </h3>
+            <div class="mx-auto" id="menu">
+            <div class="menu-item">
+                <p><a href="{% url 'team-create' %}"> Create Team  </a></p> 
+            </div>
+
+            <div class="menu-item">
+                <p> Join Team  </p>
+            </div>
+                
+            <div class="menu-item">
+                <p><a href="{% url 'match-index' %}"> Play Match  </a></p> 
+                </div>
+            </div>
+            <!-- user team -->
+            {% if user_team %}
+            <div class="card mx-auto p-1">
+                <div class="card-body">
+                    <div class="row m-0 d-flex justify-content-center mb-2">
+                            <img src="{{user_team.logo.url}}" alt="" height="70" width="70" style="border-radius: 50%;" class="my-auto">
+                            <div class="card-title mt-2">
+                                    <h4 class="text-center mt-2"> {{user_team.name}} </h4>
+                                </div>
+                        <div class="container mt-2">
+                                <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                                <a href="{{user_team.get_absolute_url}}">
+                                                    <button id="visit">visit</button>
+                                                </a>
+                                            </div>
+                    
+                                            <div class="col-md-4 col-sm-4">
+                                                <p> {{user_team.members.all.count}} Members</p>
+                                            </div>
+                    
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div class="container" id="sec1">
+    <h3> Join Team </h3>
+    <div class="row">
+        <div class="col-md-5">
+            {% for team in teams %}
+            {% include 'partials/team/team.html' %}
+            {% endfor %}
+        </div>
+        <div class="col-md-5 ml-auto">
+            <img src="{% static 'images/player.png' %}" alt="" class=" img-fluid w-100 h-100">
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<!-- <footer class="container-fluid text-center bg-dark text-light mt-4 py-3">
+    <h3 class="lead d-inline">FIFA WORLD CUP </h3> &copy;
+</footer> -->
+
+
+<style>
+    body {
+        background: #ffffff;
+    }
+    a {text-decoration: none;}
+    #sec1 {
+        background: #ffffff !important;
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    input {
+        border: 1px ridge rgb(219, 218, 218);
+        height: 29px;
+        margin: 0;
+    }
+
+    input[type="search"] {
+        border-right: none;
+        border-bottom: none;
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+        color: #F5F5F5;
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        background: #3ac57f;
+    }
+
+    input[type="submit"]:hover {
+        background: #33a56c;
+    }
+
+    h3 {
+        font-weight: 600;
+        color: #7C33AA;
+    }
+
+    h4,
+    p {
+        color: #7C33AA;
+    }
+
+    #menu {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .menu-item {
+        height: 40px;
+        color: #33a56c;
+        padding: 5px;
+        text-decoration: none;
+        margin: 10px;
+        border: 3px solid #3ac57f;
+    }
+    .menu-item p a {
+        text-decoration: none;
+        color: #33a56c;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .menu-item p {
+        color: #33a56c;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .menu-item:hover , .menu-item p a:hover, .menu-item p:hover{
+        background: #33a56c;
+        color: #F5F5F5;
+        transition: .5s;
+        cursor: pointer;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    #visit {
+        background: #3ac57f;
+        width: 70px;
+        border: 2px #3ac57f;
+        color: white;
+    }
+
+    #visit:hover {
+        background: #33a56c;
+        transition: .2s;
+    }
+
+    @media screen and (max-width:678px) {
+        .img-fluid { display: none; }
+        .menu-item p a, .menu-item p { font-size: 15px; }
+        
+    }
+</style>
+{% endblock content %}

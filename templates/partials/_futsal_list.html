@@ -1,0 +1,59 @@
+<div class="col-md-6">
+        <div class="card mt-2 futsal-card">
+        <div class="futsal-menu">
+            <img class="card-img-top" src="{{futsal.cover_img.url}}" height="180rem">
+        </div>
+        <div class="card-body ml-2 p-0">
+            <div class="row py-0 my-0">
+            <div class="col-md-3 d-none d-md-block futsal-main-photo mt-2">
+            <img src="{{futsal.main_img.url}}" alt="" height="60px" width="60px">
+            </div>
+            <div class="col-md-8 ml-3 ml-md-0 ml-lg-0">
+            <div class="row p-0" id="futsal-name"><h5>{{futsal.name}}</h5></div>
+            <div class="row">
+            <small> <i class="fas fa-map-marker-alt"></i> {{futsal.location}} </small>  
+            </div>
+            <div class="row p-0">
+                <small> <b> Rs 1000/hr </b> </small>
+            </div>
+            </div>
+            <hr>
+            </div>
+        </div>
+    
+        <div class="container mb-3">
+                <a href="{{futsal.get_absolute_url}}" class="btn btn-block" id="detail-btn"> More Info
+                        <i class="fas fa-paper-plane"></i>    
+                </a>
+        </div>
+        </div>
+    </div>
+    
+    <style>
+            .futsal-card #detail-btn {
+                background-color: #33a56c !important;
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+              
+            }
+        .btn-block {
+                
+                background: #3ab879 !important;
+                color: white;
+            }
+        .btn-block:hover {
+            background: #33a56c !important;
+        }
+        
+.futsal-card {
+    color: #7C33AA;
+}
+.futsal-card .futsal-main-photo img {
+    border-radius: 10px;
+}
+.futsal-card .futsal-name h5 {
+    font-weight: bold;
+    font-family: 'Nunito' sans-serif;
+}
+    </style>

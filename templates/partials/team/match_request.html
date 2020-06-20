@@ -1,0 +1,49 @@
+<div class="card my-2 p-1" id="item">
+    <div class="team">
+    <div class="img">
+            <img class="" src="{{match.team.logo.url}}" alt="Card image cap" height="60" width="60" style="border-radius:50%" class="">
+        </div>
+        &nbsp;&nbsp;
+        <div class="name">
+        <span class="text-center" id="teamname"> 
+            <a href="{{match.team.get_absolute_url}} "> {{match.team.name}}  </a>
+        </span>
+    </div>
+    </div>
+        <div class="details"> 
+        <h4> VS </h4>
+<small class="text-center"> {{match.date}} {{match.start_time}} </small>
+<small class="text-center"> {{match.get_game_type_display}} </small>
+<small> <a href="{{match.futsal.get_absolute_url}}"> {{match.futsal.name}} </a> </small>
+        </div>
+        <div class="team">
+        <h3> ? </h3>
+        </div>
+</div>
+
+
+<style>
+.team {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+#teamname a {
+    background: none;
+    border: none;
+    color: #7C33AA;
+    font-size: 1.1rem;
+}
+</style>

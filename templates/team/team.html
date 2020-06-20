@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock title %}
+
+
+{% block content %}
+
+
+{% include 'partials/_message.html' %}
+
+<div class="container py-2 mt-2">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- search form -->
+            <form action="{% url 'team-search' %}" method="get" class="">
+                    <input type="search" name="q" id="" placeholder="search teams..">
+                    <button type="submit" id="search-btn"> <i class="fas fa-search"></i> </button>
+                </form>
+            <!-- team admin view -->
+            {% if request.user == team.admin and request.user in team.members.all %}
+            <div class="card p-0 my-2">
+                <div class="card-header p-0 m-0">
+                    <h5 class="text-center"> Team Members </h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group">
+                        {% for member in team.members.all %}
+                        <li class="list-group-item p-0">
+                            <div class="d-flex justify-content-around p-0 m-0">
+    <img src="{{ member.profile.avatar.url}}" alt="" height="30" width="30" style="border-radius:50%;"> <p>{{member.username}}</p>
+                                <form action="{% url 'remove-member' slug=team.slug %}" method="post" class="mb-1">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="member_id" value="{{member.pk}}">
+                                    <button type="submit" id="remove" class="mb-1"> <i class="fas fa-times"></i> </button>
+                                </form>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="col-md-8 card ml-1">
+            {% if request.user == team.admin %}
+            <div class="d-flex justify-content-end p-0 mt-1">
+                <div class="dropdown">
+                    <i class="fas fa-ellipsis-v text-secondary" style="cursor:pointer;" id="dropdownMenuButton"
+                        data-toggle="dropdown"></i>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'team-update' team.slug %}">
+                            Edit <i class="fas fa-pen text-info"></i>
+                        </a>
+                        <a class="dropdown-item" href="{% url 'team-delete' slug=team.slug pk=team.pk %}">
+                            Delete <i class="fas fa-trash text-danger"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="{{team.logo.url}}" alt="" height="100" width="100" style="border-radius: 50%;" class="mt-1">
+                </div>
+
+                <div class="col-md-8">
+                    <h3 class="text-center"> {{team.name}} </h3>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            {% if request.user in team.members.all %}
+                            <a href="{% url 'leave-team' slug=team.slug %}">
+                                <button type="submit" id="leave-btn"> Leave </button>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'join-team' slug=team.slug %}">
+                                <button type="submit"> Join Team</button>
+                            </a>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4 col-sm-4">
+                            <p> {{team.members.all.count}} Members</p>
+                        </div>
+                        {% if request.user in team.members.all %}
+                        <div class="col-md-4 col-sm-4">
+                            <a href="{% url 'match-create' %}">
+                                <button type="submit"> Create Match </button>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="container mt-3">
+                    {% if request.user in team.members.all %}
+                    {% if matches %}
+                    <h3 class="text-left"> Matches </h3>
+                    {% for match in matches %}
+                        {% include 'partials/match/fix_match.html' %}
+                    {% endfor %}
+                    {% else %}
+                    <small class="text-danger"> No matches fixed. </small>
+                    {% endif %}
+
+                    {% if match_requests %}
+                    <h3 class="text-left"> Requests </h3>
+                    {% for match in match_requests %}
+                        {% include 'partials/team/match_request.html' %}
+                    {% endfor %}
+                    {% endif %}
+            </div>
+            
+            {% else %}
+            <h3 class="text-center"> Join the team to see all the games and fixtures. </h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<style>
+    button {
+        background-color: #3ac57f;
+        border-color: #3ac57f;
+        color: white;
+    }
+
+    button:hover {
+        transition: .2s;
+        background: #2ea569;
+    }
+
+    #leave-btn {
+        background: rgb(230, 42, 80);
+        border-color: rgb(230, 42, 80);
+    }
+
+    #leave-btn:hover {
+        background: rgb(209, 39, 73);
+        transition: .2s;
+    }
+
+    p {
+        color: #6912A7;
+        font-weight: 500;
+        font-family: 'Nunito';
+    }
+
+    h3 {
+        color: #6912A7;
+        font-weight: 600;
+    }
+
+    #remove {
+        color: crimson;
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        margin: -10px 0;
+        text-decoration: none;
+    }
+
+    #remove:hover {
+        color: red;
+        transition: .2s;
+    }
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input {
+        border: 1px ridge rgb(219, 218, 218);
+        height: 29px;
+        margin: 0;
+    }
+    #search-btn {
+        border: none;
+        height: 29px;
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+        color: #F5F5F5;
+        font-size: 13px;
+        width: 50px;
+        border: none !important;
+        background: #3ac57f;
+    }
+
+    input[type="submit"]:hover {
+        background: #33a56c;
+    }
+    @media screen and (max-width:678px) {
+        form {
+            margin-bottom: 5px;
+        }
+    }
+</style>
+{% endblock content %}

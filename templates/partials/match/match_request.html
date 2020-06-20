@@ -1,0 +1,69 @@
+{% load static %}
+<div class="card my-2 p-1" id="item">
+        <div class="name">
+                <span class="text-center" id="teamname"> 
+                    <a href="{{match.team.get_absolute_url}} "> {{match.team.name}}  </a>
+                </span>
+            </div>
+        <div class="team">
+        <div class="img">
+                <img class="" src="{{match.team.logo.url}}" alt="Card image cap" height="60" width="60" style="border-radius:50%" class="">
+            </div>
+            &nbsp;&nbsp;
+        </div>
+            <div class="details"> 
+            <h5> VS </h5>
+            <small>{{match.date}} <br> </small>
+            <small> {{match.start_time}} <br> </small>
+            <small> {{match.get_game_type_display}} </small>
+            <small> <a href="{{match.futsal.get_absolute_url}}"> {{match.futsal.name}} </a> </small>
+<small class="text-center"> {{match.match.date}} {{match.match.start_time}} </small>
+
+            </div>
+            <div class="team">
+            <div class="img">
+                    <img class="" src="{% static 'images/no.png' %}" alt="Card image cap" height="60" width="60" style="border-radius:50%" class="">
+                </div>
+                &nbsp;&nbsp;
+                <div>
+                {% if has_team %}
+                <form action="{% url 'match-fix' %}" method="post">
+                    {% csrf_token %}
+                <input type="hidden" name="team_id" value="{{match.team.pk}}">
+                <input type="hidden" name="match_id" value="{{match.pk}}">
+                <button id="visit">Play</button>
+                </form>
+                {% endif %}
+                </div>
+            </div>
+</div>
+
+<style>
+    .team {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+    #item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    #teamname a {
+        background: none;
+        border: none;
+        color: #7C33AA;
+        font-size: 1.1rem;
+    }
+    small a {
+        color: #33a56c;
+    }
+</style>

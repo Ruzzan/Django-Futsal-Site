@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{search_term}} {% endblock title %}
+
+{% block content %}
+
+<div class="container mt-2">
+    <h4 class="text-left" style="color: #2f9c66;">Results for {{search_term}} </h4>
+    <!-- search form -->
+    <form action="" method="get">
+        <input type="search" name="q" id="" placeholder="search matches..">
+        <button type="submit" id="search-btn"> <i class="fas fa-search"></i> </button>
+    </form>
+</div>
+<hr>
+
+<div class="container">
+    <div class="row">
+        {% for match in match_requests%}
+        <div class="col-md-5">
+            <div class="card my-2 p-1" id="item">
+                <div class="name">
+                    <span class="text-center" id="teamname">
+                        <a href="{{match.team.get_absolute_url}} "> {{match.team.name}} </a>
+                    </span>
+                </div>
+                <div class="team">
+                    <div class="img">
+                        <img class="" src="{{match.team.logo.url}}" alt="Card image cap" height="60" width="60"
+                            style="border-radius:50%" class="">
+                    </div>
+                    &nbsp;&nbsp;
+                </div>
+                <div class="details">
+                    <h5> VS </h5>
+                    <small>{{match.date}} <br> </small>
+                    <small> {{match.start_time}} <br> </small>
+                    <small> <a href="{{match.futsal.get_absolute_url}}"> {{match.futsal.name}} </a> </small>
+                    <small class="text-center"> {{match.match.date}} {{match.match.start_time}} </small>
+                </div>
+                <div class="team">
+                    <div class="img">
+                        <img class="" src="{% static 'images/no.png' %}" alt="Card image cap" height="60" width="60"
+                            style="border-radius:50%" class="">
+                    </div>
+                    &nbsp;&nbsp;
+                    <div>
+                        
+                        <form action="{% url 'match-fix' %}" method="post">
+                            {% csrf_token %}
+                    <input type="hidden" name="team_id" value="{{match.team.pk}}">
+                            <input type="hidden" name="match_id" value="{{match.pk}}">
+                            <button id="visit">Play</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<style>
+    #item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    #teamname a {
+        background: none;
+        border: none;
+        color: #7C33AA;
+        font-size: 1.1rem;
+    }
+
+    #visit {
+        background: #3ac57f;
+        width: 70px;
+        border: 2px #3ac57f;
+        color: white;
+    }
+
+    #visit:hover {
+        background: #33a56c;
+        transition: .2s;
+    }
+
+    form {
+        display: flex;
+        align-items: flex-start;
+        justify-content: start;
+    }
+
+    input {
+        border: 1px ridge rgb(219, 218, 218);
+        height: 29px;
+        margin: 0;
+    }
+
+    #search-btn {
+        border: none;
+        height: 29px;
+        background: #33a56c;
+        color: white;
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+        color: #F5F5F5;
+        font-size: 13px;
+        width: 50px;
+        border: none !important;
+        background: #3ac57f;
+    }
+
+    input[type="submit"]:hover {
+        background: #33a56c;
+    }
+    
+
+        .team {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-items: center;
+        }
+        #item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        #teamname a {
+            background: none;
+            border: none;
+            color: #7C33AA;
+            font-size: 1.1rem;
+        }
+        small a {
+            color: #33a56c;
+        }
+    </style>
+
+
+{% endblock content %}

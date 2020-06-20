@@ -1,0 +1,42 @@
+{% extends 'booking/base.html' %}
+
+{% block content %}
+
+{% include 'partials/dashboard/_dashboard_nav.html' %}
+
+<div class="container mt-3">
+        <div class="alert alert-secondary py-2" role="alert">
+            <a href="{% url 'owner-dashboard' %}">Dashboard</a> / <a href="{% url 'home' %}">Home</a> / <a href="{% url 'profile' %}">My Profile</a>
+        </div>
+    </div>
+
+<div class="container mt-2">
+    <h3> Search Result for "{{search_query}}" </h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody class="zz">
+                {% for booking in queryset %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>
+                        <img src="{{booking.user.profile.avatar.url}}" alt="" height="30" width="30"
+                            style="border-radius:50%;"> {{booking.fullname}}
+                    </td>
+                    <td>{{booking.phone}}</td>
+                    <td>{{booking.date}}</td>
+                    <td>{{booking.time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

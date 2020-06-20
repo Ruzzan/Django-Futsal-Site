@@ -1,0 +1,29 @@
+<div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody class="zz">
+                {% for booking in queryset %}
+                {% if booking.is_valid %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>
+                        <img src="{{booking.user.profile.avatar.url}}" alt="" height="30" width="30"
+                            style="border-radius:50%;"> {{booking.fullname}}
+                    </td>
+                    <td>{{booking.phone}}</td>
+                    <td>{{booking.date}}</td>
+                    <td>{{booking.time}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>

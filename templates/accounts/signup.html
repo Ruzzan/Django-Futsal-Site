@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Sign Up {% endblock title %}
+
+{% block content %}
+
+<div class="container py-2 mt-2 mb-3">
+<div class="row">
+    <div class="col-md-6 mx-auto card">
+            <form action="" method="POST" enctype="multipart/form-data" class="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Signup to Futbook </legend>
+                    {{ form }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="" type="submit">Sign Up</button>
+                </div>
+            </form>   
+            <div class="border-top py-1">
+                    <small class="text-muted">
+                        Already have an account? <a href="{% url 'login' %}" class="ml-2">Sign In</a>
+                    </small>
+                    </div>         
+    </div>
+</div>
+</div>
+
+<style>
+    .card {
+        width: 50rem;
+    }
+    legend{
+        color: #6912A7;
+    }
+    button {
+        display: inline-block;
+        font-weight: 400;
+        color: snow;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        background-color: #3ac57f;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+    }
+    button:hover {
+        background: #2ea569;
+    }
+
+    #id_username, #id_email, #id_password1, #id_password2 {
+        width: 100%;
+        border: none;
+        border-bottom: 3px #6912A7 solid;
+        height: 20px;
+        margin: -20px 0;
+        outline: none;
+        margin: 10px 0;
+    }
+    label {
+        color: #666666;
+        font-family: 'Nunito';
+        font-weight: 600;
+        margin:-10px 0;
+    }
+    #id_username:focus, #id_email:focus, #id_password1:focus, #id_password2:focus{
+        border-bottom: 3px #3ac57f solid;
+        transition: .5s;
+    }
+</style>
+
+
+{% endblock content %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+<!-- <script src="https://kit.fontawesome.com/6938574b26.js" ></script> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <title>
+        {% block title %} {% endblock title %}
+    </title>
+</head>
+
+<style>
+    html {
+        overflow-x: hidden;
+    }
+        .mobile-nav {
+            background-color: #7C33AA !important;
+        }
+        
+        .navbar-nav .nav-item .nav-link{
+            color: white !important;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .navbar-nav .nav-item .nav-link:hover{
+            color:#47ffa3 !important;
+        }
+        </style>
+
+<body>
+    <!--mobile nav-->
+{% include 'partials/_nav.html' %}
+    <!--end mobile nav -->
+
+    {% block content %}
+
+    {% endblock content %}
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+$('#saveForm').submit(function(e){
+    e.preventDefault();
+    var pk = $('input[name="futsal_id"]').val()
+    console.log(pk);
+    $.ajax({
+        url:"{% url 'save' %}",
+        method:"POST",
+        data:{
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            'futsal_id':pk,
+        },
+        success:function(data) {
+            if(data.data['is_saved'] == true) {
+                $('#save').css('background', '#6912A7');
+                $('#save').text('Saved');
+            }
+            else {
+                $('#save').css('background', '#277E52');
+                $('#save').text('Save');   
+            }
+        },
+        error:function(data) {
+            console.log(data);
+        }
+    });
+});
+
+
+</script>
+
+</html>

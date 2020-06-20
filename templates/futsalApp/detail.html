@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{futsal.name}} {% endblock title %}
+
+{% block content %}
+
+{% include 'partials/_message.html' %}
+
+<div class="container card mt-2 py-0 px-0 pb-2 mb-3">
+    <div class="row m-0 p-0" id="cover"> 
+      <img src="{{futsal.cover_img.url}}" alt="">  
+    </div>
+
+    <div class="futsal-detail">
+        <div class="container-left">
+            <div class="main-img">
+                <img src="{{futsal.main_img.url}}" alt="" height="100" width="100">
+            </div>
+            <div class="info ml-md-2 ml-sm-0">
+                <p> {{futsal.name}} </p>
+                <p> <i class="fas fa-map-marker-alt"></i> {{futsal.location}} </p>
+                <p> Rs. {{futsal.price}} </p>
+            </div>
+        </div>
+
+        <div class="container-right">
+    <button class="action-btn mt-2" id="book"><a href="" data-toggle="modal" data-target="#exampleModal">Book Now</a></button>
+
+    <form action="{% url 'save' %}" method="post" id="saveForm">
+        {% csrf_token %}
+        <input type="hidden" name="futsal_id" value="{{futsal.pk}}">
+    {% if is_saved %}
+    <button class="action-btn mt-2" id="save" type="submit" style="background:#6912A7">Saved</button>
+    {% else %}
+    <button class="action-btn mt-2" id="save" type="submit">Save</button>
+    {% endif %}
+    </form>
+    
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-7 col-sm-12 description">
+            <div class="mx-1">
+                {{futsal.description | safe }}
+            </div>
+        </div>
+
+        <div class="col-md-5 col-sm-12 text-justify">
+<h5 class="text-center" style="font-family:'Nunito';color:#7C33AA"> Booking for today 
+    {{today}} </h5>
+        <ul class="list-group mx-2">
+            {% for booking in bookings %}
+            {% if booking.user == request.user %}
+            <li class="list-group-item disabled" aria-disabled="true" style="background:#5abd8b;color:white">
+    Booked at {{booking.time}} <i class="fas fa-check-circle" style="color:white;"></i>
+            </li>
+                {% else %}
+        <li class="list-group-item disabled" aria-disabled="true" >
+             Booked at {{booking.time}} <i class="fas fa-check-circle" style="color: #33a56c;"></i>
+        </li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+        </div>
+    </div>
+    <hr>
+    
+    
+
+    <div class="row">
+        <div class="col">
+        <div id="map" class="mx-1"></div> 
+        </div>
+    </div>
+
+    
+     <!-- Modal -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel" style="font-family:'Nunito';color:#6912A7">Book {{futsal.name}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+        </div>
+    <div class="modal-body">
+    <form action="{% url 'futsal-detail' futsal.slug %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+    <!-- <button type="submit" class="">Book Futsal</button> -->
+    <button type="submit">Book</button>
+    </div>
+    </form>
+        </div>
+    </div>
+    </div>
+    
+
+</div>
+
+<div class="hide">
+    <p id="slug"> {{futsal.slug}} </p>
+    <p id="lat"> {{futsal.lat}} </p>
+    <p id="lng"> {{futsal.lng}} </p>
+</div>
+
+<style>
+    body,html { overflow-x: hidden; }
+    #cover img{
+        height: 200px;
+        width: 100%;
+    }
+
+    .futsal-detail {
+        display: flex;
+        width: 100%;
+        margin: 10px;
+        justify-content: space-between;
+        align-items: center;
+        height: 100px;
+    }
+    .main-img img {
+        border-radius: 15px;
+    }
+    .container-left {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        height: 100%;
+        width:  auto;
+        
+    }
+
+    .container-left .info {
+        margin-top: 10px;
+        line-height: 10px;
+        font-weight: 600;
+        color: #7C33AA;
+        font-size: 17px;
+        font-family: 'Nunito';
+    }
+
+    .container-right {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        height: 100%;
+        width: 200px;
+        padding-right:20px;
+    }
+
+    .action-btn {
+        color: white;
+        border: none;
+        font-weight: 600;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .action-btn a {
+        font-weight: 600;
+        font-family: 'Nunito';
+        color: white;
+        text-decoration: none;
+    }
+    #book {
+        background: #7C33AA;
+    }
+    #book:hover{ background: rgb(77, 31, 105); transition: .2s; }
+
+    #save {
+        background: #33a56c;
+    }
+    #save:hover{ background: #277e52; transition: .2s; }
+
+    .description { 
+        text-align: justify; 
+        border: none; 
+        border-right: 2px solid rgb(155, 70, 207);
+        font-size: 18px;
+        font-family: 'Nunito';
+        font-weight: 500;
+    }
+    .alert {
+        font-family: 'Nunito' sans-serif;
+        font-weight: 500;
+    }
+
+    button {
+        display: inline-block;
+        font-weight: 400;
+        color: snow;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        background-color: #3ac57f;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+    }
+    button:hover {
+        background: #2ea569;
+    }
+
+    label {
+        color: #666666;
+        font-family: 'Nunito';
+        font-weight: 600;
+        margin:5px 0;
+    }
+    #id_fullname, #id_phone, #id_futsal,#id_date, #id_time {
+        font-size: 18px;
+        font-weight: 500;
+        font-family: 'Nunito';
+    }
+    #id_fullname:focus, #id_phone:focus, #id_price:focus,#id_description:focus {
+        border-color: #3ac57f;
+        transition: .2s;
+    }
+    #id_fullname, #id_phone, #id_futsal {
+        width: 70%;
+        border: none;
+        border-bottom: 2px #6912A7 solid;
+        height: 20px;
+        margin: 20px;
+        outline: none;
+        margin: 10px 0;
+    }
+    #id_date,#id_time {
+        width: 50%;
+    }
+
+    .hide {
+        display: none;
+    }
+          
+    .helptext {
+        display: block;
+        color: #6912A7;
+        font-weight: 500;
+        font-family: 'Nunito';
+    }
+
+    #map {
+        height: 400px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    @media screen and (max-width:698px) {
+        .futsal-detail {
+            justify-content: space-between;
+            margin: 5px;
+            height: auto;
+            align-items: flex-start;
+        }
+        .main-img {
+            display: none;
+        }
+        
+        .container-left {
+            flex: auto;
+            width: auto;
+            justify-content: start;
+        }
+        .container-left .info {
+            font-size: 15px;
+            line-height: 10px;
+        }
+        .container-right {
+          
+            width: auto;
+            justify-content: space-around;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .description {
+            border: none;
+        }
+    }
+</style>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjyGjSln2wpTgzxdQdVtkKmGUXAud9jZA&callback=initMap&v=3"
+async defer></script>
+
+<script>
+
+setInterval(function(){
+    $("*").each(function() {
+        if ($(this).css("zIndex") == 3) {
+            $(this).css("zIndex", "-999");
+        }
+    })}
+, 1);
+var lat = $('#lat').text();
+var lng = $('#lng').text();
+
+function initMap() {
+    // map options 
+    var options = {
+        zoom:17,
+    }
+    // new map 
+    var map = new google.maps.Map(document.querySelector("#map"),options);
+
+    let location1 = new google.maps.LatLng(lat,lng);
+
+    // add map marker
+    var marker = new google.maps.Marker({
+        position:location1,
+        map:map
+    }); 
+    marker.setVisible(true);
+
+    
+    // for info window 
+    var infoWindow = new google.maps.InfoWindow({
+        content:"<h3> This is boston </h3>",
+    });
+
+    // add event to the marker to display the info windoow 
+    marker.addListener('click', function(){
+        infoWindow.open(map, marker);
+    });       
+    var latLng = marker.getPosition(); 
+    map.setCenter(latLng);
+}
+
+
+</script>
+
+{% endblock content %}

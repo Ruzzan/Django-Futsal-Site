@@ -1,0 +1,45 @@
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Client Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col"> <i class="fas fa-trash text-danger fa-2x"></i> </th>
+            </tr>
+        </thead>
+        <tbody class="zz">
+            {% for booking in queryset %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>
+                    <img src="{{booking.user.profile.avatar.url}}" alt="" height="30" width="30"
+                        style="border-radius:50%;"> {{booking.fullname}}
+                </td>
+                <td>{{booking.phone}}</td>
+                <td>{{booking.date}}</td>
+                <td>{{booking.time}}</td>
+                <td>
+                    <form action="{%  url 'booking-delete' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="booking_id" value="{{booking.pk}}">
+                        <button type="submit"> <i class="fas fa-trash"></i> </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    button {
+        border: none;
+        background: transparent;
+        padding: 0px;
+        margin: 0;
+        color: #33a56c;
+    }
+</style>

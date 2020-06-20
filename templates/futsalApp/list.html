@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %} Futsal List {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-3 d-none d-md-block d-lg-block">
+            <h3 class="text-left" style="font-family:'Nunito';color:#7C33AA"> Futsal Search </h3>
+            <div class="card py-2">
+
+            <form action="{% url 'futsal-search' %}" method="get">
+            <div class="input-group mb-3 mt-0">
+            <input type="text" class="form-control" placeholder="Search Futsal.." name="futsal_name">
+            <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">
+                <i class="fas fa-search"></i>
+            </span>
+            </div>
+            </div>
+                
+        <div class="container">
+        <div class="input-group mb-3 mt-2">
+            <input type="text" class="form-control" placeholder="Location"
+            name="futsal_location">
+            <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">
+                <i class="fas fa-map-marker-alt"></i>
+            </span>
+            </div>
+            </div>
+
+        <div class="input-group mb-3 mt-2">
+                <input type="text" class="form-control" placeholder="Price" name="futsal_price">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                        Rs
+                    </span>
+                </div>
+                </div>
+                
+            <input type="submit" value="Search" class="btn btn-block" id="search-btn">
+                      
+                </div>
+            </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="row">
+                {% for futsal in futsals %}
+                {% include 'partials/_futsal_list.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    
+    </div>
+    </div>
+
+    <hr>
+    <!-- pagination here -->
+    <div class="container mt-2">
+        {% if futsals %}
+        <ul class="pagination">
+            {% if futsals.has_previous %}
+            <li class="page-item">
+            <a href="?page{{futsal.previous_page_number}}" class="page-link">&laquo;</a>
+            </li>
+            {% endif %}
+        <!-- looping the pagination -->
+        {% for p in page_range %}
+            {% if futsals.number == p %}
+
+            <li class="page-item">
+  <a href="?page={{p}}" class="page-link" style="background:rgb(47, 153, 100);color:seashell;" >{{p}}</a>
+            </li>
+
+            {% else %}
+
+            <li class="page-item">
+            <a href="?page={{p}}" class="page-link" >{{p}}</a>
+            </li>
+
+            {% endif %}
+
+        {% endfor %}
+    
+        {# pagination to go to next page #}
+        {% if homes.has_next %}
+        <li class="page-item"> <a href="?page={{ homes.next_page_number }}" class="page-link"> &raquo; </a> </li>
+        {% endif %}
+
+        </ul>
+        {% endif %}
+    </div>
+
+
+<style>
+#search-btn {
+    background: #3ac57f;
+    color: white;
+    font-family: 'Nunito' sans-serif;
+    font-weight: 600;
+}
+#search-btn:hover {
+    background: #2f9c66;
+    transition: .2s;
+}
+.input-group-text {
+    background: #3ac57f;
+    color: white;
+}
+</style>
+
+{% endblock content %}

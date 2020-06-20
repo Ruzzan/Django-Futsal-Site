@@ -1,0 +1,27 @@
+<div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col-1">#</th>
+                    <th scope="col-3">Client Name</th>
+                    <th scope="col-3">Phone</th>
+                    <th scope="col-3">Date</th>
+                    <th scope="col-3">Time</th>
+                </tr>
+            </thead>
+            <tbody class="zz">
+                {% for booking in today_booking %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>
+                        <img src="{{booking.user.profile.avatar.url}}" alt="" height="30" width="30"
+                            style="border-radius:50%;"> {{booking.fullname}}
+                    </td>
+                    <td>{{booking.phone}}</td>
+                    <td>{{booking.date}}</td>
+                    <td>{{booking.time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>

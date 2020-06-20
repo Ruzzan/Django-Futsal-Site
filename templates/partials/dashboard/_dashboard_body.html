@@ -1,0 +1,83 @@
+<div class="container">
+        <h2 class="font-weight:800;"> {{futsal}} Dashboard  </h2>
+    </div>
+
+    <div class="container">
+        <div class="alert alert-secondary py-2" role="alert">
+            <a href="{% url 'owner-dashboard' %}">Dashboard</a> / <a href="{% url 'home' %}">Home</a> / <a href="{% url 'profile' %}">My Profile</a>
+        </div>
+    </div>
+
+    <div class="container ">
+        <div class="row" id="number-row">
+
+            <div class="col-md-4">
+                <div class="card text-white bg-primary" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Today's Booking</h5>
+                    </div>
+                    <div class="card-body p-0 text-center">
+                        <h2 class="card-text display-3 my-auto">
+                            {{today_booking.count}}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">
+                            Total valid bookings
+                        </h5>
+                    </div>
+                    <div class="card-body p-0 text-center">
+                        <h2 class="card-text display-3">
+                            {{valid_booking}}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">
+                            Total bookings upto now
+                        </h5>
+                    </div>
+                    <div class="card-body p-0 text-center">
+                        <h2 class="card-text display-3">
+                            {{queryset.count}}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                    aria-controls="nav-home" aria-selected="true">Today' Booking</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false">Valid Booking</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                    aria-controls="nav-contact" aria-selected="false">Total Booking</a>
+            </div>
+        </nav>
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            {% include 'partials/dashboard/today_booking.html' %}
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            {% include 'partials/dashboard/valid_booking.html' %}
+        </div>
+
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            {% include 'partials/dashboard/total_booking.html' %}
+        </div>
+    </div>
